@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-text-darks: var(--text-darks);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-active-foreground: var(--sidebar-active-foreground);
+  --color-light: var(--light);
+  --color-admin-dashboard-background: var(--admin-dashboard-background);
+  --color-admin-card-background: var(--admin-card-background);
+  --color-admin-timeline-faint-border: var(--admin-timeline-faint-border);
+}
+
+:root {
+  --radius: 0.625rem;
+  
+  /* New Color System based on palette */
+  --background: #FFF9F3;
+  --foreground: #2E0219;
+  
+  --card: #FFFFFF;
+  --card-foreground: #2E0219;
+  
+  --popover: #FFFFFF;
+  --popover-foreground: #2E0219;
+  
+  --primary: #6A0F49;
+  --primary-dark: #4A0A31;
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #6A0F49;
+  --secondary-foreground: #FFFFFF;
+  
+  --accent: #F2AF29;
+  --accent-foreground: #2E0219;
+  
+  --light: #FFF9F3;
+  
+  --muted: #F5E6ED;
+  --muted-foreground: #6B5563;
+  
+  --destructive: oklch(0.577 0.245 27.325);
+  
+  --border: #E5D5DD;
+  --input: #8B6E7C;
+  --ring: #6A0F49;
+  
+  --chart-1: #F2AF29;
+  --chart-2: #6A0F49;
+  --chart-3: #2E0219;
+  --chart-4: #FFF9F3;
+  --chart-5: #E5D5DD;
+  
+  --sidebar: #F5E6ED;
+  --sidebar-foreground: #2E0219;
+  --sidebar-primary: #6A0F49;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #FFF9F3;
+  --sidebar-accent-foreground: #2E0219;
+  --sidebar-border: #E5D5DD;
+  --sidebar-ring: #6A0F49;
+  --sidebar-active: #6A0F49;
+  --sidebar-active-foreground: #FFFFFF;
+  
+  --admin-dashboard-background: #FFF9F3;
+  --admin-card-background: #FEFAF5;
+  --admin-overview-card-background: #FFFFFF;
+  --admin-timeline-faint-border: #E5D5DD;
+  
+  --overview-chart-active: #06C270;
+  --claims-primary: #FFFFFF;
+  
+  --text-darks: #2E0219;
+}
+
+.dark {
+  --background: #1A0812;
+  --foreground: #FFF9F3;
+  
+  --card: #2E0219;
+  --card-foreground: #FFF9F3;
+  
+  --popover: #2E0219;
+  --popover-foreground: #FFF9F3;
+  
+  --primary: #F2AF29;
+  --primary-foreground: #2E0219;
+  
+  --secondary: #6A0F49;
+  --secondary-foreground: #FFF9F3;
+  
+  --muted: #3D1A28;
+  --muted-foreground: #B39BA8;
+  
+  --accent: #F2AF29;
+  --accent-foreground: #2E0219;
+  
+  --destructive: oklch(0.704 0.191 22.216);
+  
+  --border: rgba(255, 249, 243, 0.1);
+  --input: rgba(255, 249, 243, 0.15);
+  --ring: #F2AF29;
+  
+  --chart-1: #F2AF29;
+  --chart-2: #6A0F49;
+  --chart-3: #FFF9F3;
+  --chart-4: #8B6E7C;
+  --chart-5: #E5D5DD;
+  
+  --sidebar: #2E0219;
+  --sidebar-foreground: #FFF9F3;
+  --sidebar-primary: #F2AF29;
+  --sidebar-primary-foreground: #2E0219;
+  --sidebar-accent: #3D1A28;
+  --sidebar-accent-foreground: #FFF9F3;
+  --sidebar-border: rgba(255, 249, 243, 0.1);
+  --sidebar-ring: #F2AF29;
+  
+  --admin-overview-card-primary: #3D1A28;
+  --admin-overview-card-dark-primary: #2E0219;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Manrope", sans-serif;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .modal-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--sidebar-primary) transparent;
+  }
+  
+  .modal-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+  .modal-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .modal-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--sidebar-primary);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+  }
+  .modal-scroll:hover::-webkit-scrollbar-thumb {
+    filter: brightness(0.92);
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

@@ -18,32 +18,64 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const data = await authService.login(email, password);
+      const response = await authService.login(email, password);
+      console.log('Login response:', response);
+      
+      // Handle the nested response structure from API
+      const token = response.token;
+      const user = response.data?.user || response.user;
+      
+      if (!user || !token) {
+        throw new Error('Invalid response structure');
+      }
+      
       const userData = {
-        ...data.user,
-        token: data.token,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        photo: user.photo,
+        _id: user._id,
+        token: token,
       };
+      
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
-      return { success: true, data: userData, message: data.message || 'Login successful!' };
+      return { success: true, data: userData, message: response.message || 'Login successful!' };
     } catch (error) {
-      const message = error.response?.data?.message || 'Login failed. Please try again.';
+      console.error('Login error:', error);
+      const message = error.response?.data?.message || error.message || 'Login failed. Please try again.';
       return { success: false, error: message };
     }
   };
 
   const signup = async (name, email, password, passwordConfirm) => {
     try {
-      const data = await authService.signup(name, email, password, passwordConfirm);
+      const response = await authService.signup(name, email, password, passwordConfirm);
+      console.log('Signup response:', response);
+      
+      // Handle the nested response structure from API
+      const token = response.token;
+      const user = response.data?.user || response.user;
+      
+      if (!user || !token) {
+        throw new Error('Invalid response structure');
+      }
+      
       const userData = {
-        ...data.user,
-        token: data.token,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        photo: user.photo,
+        _id: user._id,
+        token: token,
       };
+      
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
-      return { success: true, data: userData, message: data.message || 'Signup successful!' };
+      return { success: true, data: userData, message: response.message || 'Signup successful!' };
     } catch (error) {
-      const message = error.response?.data?.message || 'Signup failed. Please try again.';
+      console.error('Signup error:', error);
+      const message = error.response?.data?.message || error.message || 'Signup failed. Please try again.';
       return { success: false, error: message };
     }
   };

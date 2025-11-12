@@ -42,9 +42,11 @@ export const LoginForm = () => {
                 navigate('/admin');
             } else {
                 toast.error(result.error);
+
             }
         } catch (error) {
             toast.error('An unexpected error occurred. Please try again.');
+            console.log(error,"error");
         } finally {
             setIsLoading(false);
         }

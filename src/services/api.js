@@ -3,7 +3,7 @@ import axios from 'axios';
 // Create axios instance with base configuration
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'https://feedbackforge-backend.onrender.com/api/v1',
-  timeout: 15000,
+  timeout: 60000, // 60 seconds timeout (for Render.com cold starts)
   headers: {
     'Content-Type': 'application/json',
   },

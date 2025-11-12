@@ -8,8 +8,9 @@ export const feedbackService = {
   },
 
   // Get all feedback (for admin)
-  getAllFeedback: async () => {
-    const response = await api.get('/feedbacks');
+  getAllFeedback: async (params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    const response = await api.get(`/feedbacks${queryString ? `?${queryString}` : ''}`);
     return response.data;
   },
 

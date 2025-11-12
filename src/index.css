@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -50,44 +51,44 @@
 
 :root {
   --radius: 0.625rem;
-  
-  /* New Color System based on palette */
+
+  /* Custom Color System based on palette */
   --background: #FFF9F3;
   --foreground: #2E0219;
-  
+
   --card: #FFFFFF;
   --card-foreground: #2E0219;
-  
+
   --popover: #FFFFFF;
   --popover-foreground: #2E0219;
-  
+
   --primary: #6A0F49;
   --primary-dark: #4A0A31;
   --primary-foreground: #FFFFFF;
-  
+
   --secondary: #6A0F49;
   --secondary-foreground: #FFFFFF;
-  
+
   --accent: #F2AF29;
   --accent-foreground: #2E0219;
-  
+
   --light: #FFF9F3;
-  
+
   --muted: #F5E6ED;
   --muted-foreground: #6B5563;
-  
+
   --destructive: oklch(0.577 0.245 27.325);
-  
+
   --border: #E5D5DD;
   --input: #8B6E7C;
   --ring: #6A0F49;
-  
+
   --chart-1: #F2AF29;
   --chart-2: #6A0F49;
   --chart-3: #2E0219;
   --chart-4: #FFF9F3;
   --chart-5: #E5D5DD;
-  
+
   --sidebar: #F5E6ED;
   --sidebar-foreground: #2E0219;
   --sidebar-primary: #6A0F49;
@@ -98,52 +99,52 @@
   --sidebar-ring: #6A0F49;
   --sidebar-active: #6A0F49;
   --sidebar-active-foreground: #FFFFFF;
-  
+
   --admin-dashboard-background: #FFF9F3;
   --admin-card-background: #FEFAF5;
   --admin-overview-card-background: #FFFFFF;
   --admin-timeline-faint-border: #E5D5DD;
-  
+
   --overview-chart-active: #06C270;
   --claims-primary: #FFFFFF;
-  
+
   --text-darks: #2E0219;
 }
 
 .dark {
   --background: #1A0812;
   --foreground: #FFF9F3;
-  
+
   --card: #2E0219;
   --card-foreground: #FFF9F3;
-  
+
   --popover: #2E0219;
   --popover-foreground: #FFF9F3;
-  
+
   --primary: #F2AF29;
   --primary-foreground: #2E0219;
-  
+
   --secondary: #6A0F49;
   --secondary-foreground: #FFF9F3;
-  
+
   --muted: #3D1A28;
   --muted-foreground: #B39BA8;
-  
+
   --accent: #F2AF29;
   --accent-foreground: #2E0219;
-  
+
   --destructive: oklch(0.704 0.191 22.216);
-  
+
   --border: rgba(255, 249, 243, 0.1);
   --input: rgba(255, 249, 243, 0.15);
   --ring: #F2AF29;
-  
+
   --chart-1: #F2AF29;
   --chart-2: #6A0F49;
   --chart-3: #FFF9F3;
   --chart-4: #8B6E7C;
   --chart-5: #E5D5DD;
-  
+
   --sidebar: #2E0219;
   --sidebar-foreground: #FFF9F3;
   --sidebar-primary: #F2AF29;
@@ -152,7 +153,7 @@
   --sidebar-accent-foreground: #FFF9F3;
   --sidebar-border: rgba(255, 249, 243, 0.1);
   --sidebar-ring: #F2AF29;
-  
+
   --admin-overview-card-primary: #3D1A28;
   --admin-overview-card-dark-primary: #2E0219;
 }
@@ -176,7 +177,7 @@
     scrollbar-width: thin;
     scrollbar-color: var(--sidebar-primary) transparent;
   }
-  
+
   .modal-scroll::-webkit-scrollbar {
     width: 8px;
   }

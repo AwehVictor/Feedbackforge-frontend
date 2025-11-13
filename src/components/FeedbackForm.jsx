@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { MessageSquare, ArrowRight, Info } from 'lucide-react';
+import { MessageSquare, ArrowRight, Info, Star } from 'lucide-react';
 import { toast } from 'sonner';
 import { feedbackService } from '../services/feedbackService';
 
@@ -28,13 +28,32 @@ const FeedbackForm = () => {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const branches = [
+    'Ikeja Branch',
+    'Surulere Branch',
+    'Victoria Island Branch',
+    'Lekki Branch',
+    'Yaba Branch',
+    'Abeokuta Branch',
+    'Ibadan Branch',
+    'Ilorin Branch',
+    'Abuja Branch',
+    'Port Harcourt Branch',
+    'Enugu Branch',
+    'Kano Branch',
+    'Kaduna Branch',
+    'Akure Branch',
+    'Osogbo Branch',
+  ];
+
   const serviceTypes = [
+    'Branch Visit',
     'Mobile App',
-    'Web Application',
-    'Customer Support',
-    'Product Quality',
-    'Delivery Service',
-    'Other'
+    'ATM Service',
+    'Online Banking',
+    'Customer Service Call',
+    'USSD Banking',
+    'POS Transaction',
   ];
 
   const handleInputChange = (e) => {
@@ -99,11 +118,6 @@ const FeedbackForm = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const getRatingEmoji = (index) => {
-    const emojis = ['😞', '😕', '😐', '😊', '🤩'];
-    return emojis[index - 1];
   };
 
   const getRatingLabel = (index) => {
@@ -190,7 +204,7 @@ const FeedbackForm = () => {
                     className="w-full px-4 py-3 rounded-md border-2 border-border bg-background text-foreground 
                              focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all duration-300
                              placeholder:text-muted-foreground group-hover:border-primary/50"
-                    placeholder="08012345678"
+                    placeholder="+234"
                   />
                 </div>
               </div>
@@ -235,17 +249,23 @@ const FeedbackForm = () => {
                 <Label htmlFor="branch" className="block text-sm font-medium text-foreground mb-2">
                   Branch/Location <span className="text-muted-foreground text-xs">(Optional)</span>
                 </Label>
-                <Input
-                  type="text"
-                  id="branch"
-                  name="branch"
+                <Select
                   value={formData.branch}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 rounded-md border-2 border-border bg-background text-foreground 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, branch: value }))}
+                >
+                  <SelectTrigger className="w-full px-4 py-3 rounded-md border-2 border-border bg-background text-foreground 
                            focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all duration-300
-                           placeholder:text-muted-foreground group-hover:border-primary/50"
-                  placeholder="Enter branch or location"
-                />
+                           group-hover:border-primary/50">
+                    <SelectValue placeholder="Select a branch (optional)" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {branches.map((branch) => (
+                      <SelectItem key={branch} value={branch}>
+                        {branch}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -262,7 +282,7 @@ const FeedbackForm = () => {
                 How would you rate your experience? <span className="text-accent">*</span>
               </p>
               
-              <div className="flex justify-center gap-3 mb-4">
+              <div className="flex justify-center gap-2 mb-4">
                 {[1, 2, 3, 4, 5].map((index) => (
                   <button
                     key={index}
@@ -270,11 +290,15 @@ const FeedbackForm = () => {
                     onClick={() => handleRatingClick(index)}
                     onMouseEnter={() => setHoveredRating(index)}
                     onMouseLeave={() => setHoveredRating(0)}
-                    className={`text-5xl transition-all duration-300 transform hover:scale-125 cursor-pointer
-                              ${(hoveredRating >= index || formData.rating >= index) ? 'grayscale-0' : 'grayscale opacity-30'}
-                              ${formData.rating === index ? 'scale-125 animate-bounce' : ''}`}
+                    className={`p-2 transition-all duration-300 transform hover:scale-110 cursor-pointer rounded-full
+                              ${formData.rating === index ? 'scale-110' : ''}`}
                   >
-                    {getRatingEmoji(index)}
+                    <Star
+                      className={`w-12 h-12 transition-all duration-300
+                                ${(hoveredRating >= index || formData.rating >= index) 
+                                  ? 'fill-accent text-accent' 
+                                  : 'text-muted-foreground'}`}
+                    />
                   </button>
                 ))}
               </div>

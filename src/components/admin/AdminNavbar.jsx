@@ -12,8 +12,8 @@ export const AdminNavbar = ({ activeTab, sidebarOpen, setSidebarOpen }) => {
         };
       case 'performance':
         return {
-          title: 'Performance Trends',
-          description: 'Analyze feedback trends and insights',
+          title: 'Performance Metrics',
+          description: 'Analyze feedback metrics and insights',
           icon: TrendingUp,
         };
       default:

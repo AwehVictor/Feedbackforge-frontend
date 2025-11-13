@@ -37,7 +37,7 @@ export const AdminSidebar = ({ activeTab, setActiveTab, setSidebarOpen }) => {
     },
     {
       id: 'performance',
-      label: 'Performance Trends',
+      label: 'Performance Metrics',
       icon: TrendingUp,
     },
   ];

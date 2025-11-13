@@ -1,7 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import { MessageSquare, Star, LayoutGrid, LayoutList, Filter } from 'lucide-react';
+import { MessageSquare, Star, LayoutGrid, LayoutList, Filter, X } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { feedbackService } from '../../services/feedbackService';
 import { toast } from 'sonner';
 import { FeedbackGrid } from './FeedbackGrid';
@@ -14,6 +21,10 @@ export const FeedbackTab = () => {
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const loadMoreRef = useRef(null);
   
+  // Filter state
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [urgencyFilter, setUrgencyFilter] = useState('all');
+  
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -21,8 +32,8 @@ export const FeedbackTab = () => {
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    fetchFeedbacks(1, true); // Reset to page 1 when view changes
-  }, [view]);
+    fetchFeedbacks(1, true); // Reset to page 1 when view or filters change
+  }, [view, statusFilter, urgencyFilter]);
 
   // Infinite scroll observer for grid view
   useEffect(() => {
@@ -61,10 +72,21 @@ export const FeedbackTab = () => {
       // Set limit based on view: 9 for grid, 10 for list
       const limit = view === 'grid' ? 9 : 10;
 
-      const response = await feedbackService.getAllFeedback({
+      // Build query parameters with filters
+      const params = {
         page,
         limit,
-      });
+      };
+
+      // Add filters only if they're not "all"
+      if (statusFilter !== 'all') {
+        params.status = statusFilter;
+      }
+      if (urgencyFilter !== 'all') {
+        params.urgency = urgencyFilter;
+      }
+
+      const response = await feedbackService.getAllFeedback(params);
       
       console.log('Feedback API response:', response);
 
@@ -130,6 +152,13 @@ export const FeedbackTab = () => {
     fetchFeedbacks(page, false);
   };
 
+  const handleClearFilters = () => {
+    setStatusFilter('all');
+    setUrgencyFilter('all');
+  };
+
+  const hasActiveFilters = statusFilter !== 'all' || urgencyFilter !== 'all';
+
   const safeFeedbacks = Array.isArray(feedbacks) ? feedbacks : [];
 
   // Calculate stats safely
@@ -157,6 +186,7 @@ export const FeedbackTab = () => {
   return (
     <div className="space-y-6">
       {/* Header with View Toggle */}
+      
       <div className="flex justify-between items-center flex-wrap gap-4">
         <div className="flex items-center gap-4">
           <div className="flex font-semibold">
@@ -189,7 +219,62 @@ export const FeedbackTab = () => {
         </div>
       </div>
 
-     
+      {/* Filters Section */}
+      <Card className="p-4">
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Filter className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm font-medium">Filters:</span>
+          </div>
+
+          {/* Status Filter */}
+          {/* <div className="flex items-center gap-2">
+            <label className="text-sm text-muted-foreground">Status:</label>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder="All Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="in_progress">In Progress</SelectItem>
+                <SelectItem value="resolved">Resolved</SelectItem>
+                <SelectItem value="closed">Closed</SelectItem>
+              </SelectContent>
+            </Select>
+          </div> */}
+
+          {/* Urgency Filter */}
+          <div className="flex items-center gap-2">
+            <label className="text-sm text-muted-foreground">Urgency:</label>
+            <Select value={urgencyFilter} onValueChange={setUrgencyFilter}>
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder="All Urgency" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Urgency</SelectItem>
+                <SelectItem value="low">Low</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="high">High</SelectItem>
+                <SelectItem value="critical">Critical</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Clear Filters Button */}
+          {hasActiveFilters && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleClearFilters}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <X className="h-4 w-4 mr-1" />
+              Clear Filters
+            </Button>
+          )}
+        </div>
+      </Card>
 
       {/* Divider */}
       <div className="border-b border-border" />
@@ -198,14 +283,31 @@ export const FeedbackTab = () => {
       {safeFeedbacks.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 bg-muted/20 rounded-lg border-2 border-dashed border-border">
           <MessageSquare className="w-16 h-16 text-muted-foreground mb-4 opacity-50" />
-          <h3 className="text-xl font-semibold text-foreground mb-2">No Feedback Yet</h3>
+          <h3 className="text-xl font-semibold text-foreground mb-2">
+            {hasActiveFilters ? 'No Feedback Found' : 'No Feedback Yet'}
+          </h3>
           <p className="text-muted-foreground text-center max-w-md">
-            There are no feedback submissions at the moment. Check back later or encourage customers to submit feedback.
+            {hasActiveFilters 
+              ? 'No feedback matches your current filters. Try adjusting your filter criteria.'
+              : 'There are no feedback submissions at the moment. Check back later or encourage customers to submit feedback.'}
           </p>
+          {hasActiveFilters && (
+            <Button
+              variant="outline"
+              onClick={handleClearFilters}
+              className="mt-4"
+            >
+              Clear Filters
+            </Button>
+          )}
         </div>
       ) : view === 'grid' ? (
         <>
-          <FeedbackGrid feedbacks={safeFeedbacks} isFetchingMore={isFetchingMore} />
+          <FeedbackGrid 
+            feedbacks={safeFeedbacks} 
+            isFetchingMore={isFetchingMore}
+            onRefresh={() => fetchFeedbacks(1, true)}
+          />
           <div ref={loadMoreRef} className="flex items-center justify-center p-4" style={{ minHeight: '100px' }}>
             {isFetchingMore && (
               <div className="text-center">

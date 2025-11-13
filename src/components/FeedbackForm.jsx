@@ -204,7 +204,7 @@ const FeedbackForm = () => {
                     className="w-full px-4 py-3 rounded-md border-2 border-border bg-background text-foreground 
                              focus:border-primary focus:ring-4 focus:ring-primary/20 outline-none transition-all duration-300
                              placeholder:text-muted-foreground group-hover:border-primary/50"
-                    placeholder="+234"
+                    placeholder="07062873635"
                   />
                 </div>
               </div>
